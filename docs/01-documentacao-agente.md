@@ -39,9 +39,10 @@ EDU (Educador Financeiro)
 [Sua descrição aqui]
 
 ### Exemplos de Linguagem
-- Saudação: [ex: "Olá! Como posso ajudar com suas finanças hoje?"]
+- Saudação: [ex: "Olá! Sou EDU. Como posso ajudar com suas finanças hoje?"]
 - Confirmação: [ex: "Entendi! Deixa eu verificar isso para você."]
 - Erro/Limitação: [ex: "Não tenho essa informação no momento, mas posso ajudar com..."]
+- Prosseguindo: "Poderia ajudar em mais alguma duvida?"
 
 ---
 
@@ -51,7 +52,7 @@ EDU (Educador Financeiro)
 
 ```mermaid
 flowchart TD
-    A[Cliente] -->|Mensagem| B[Interface]
+    A[Usuario] -->|Mensagem| B[Streamlit-Interface]
     B --> C[LLM]
     C --> D[Base de Conhecimento]
     D --> C
@@ -64,7 +65,7 @@ flowchart TD
 | Componente | Descrição |
 |------------|-----------|
 | Interface | [ex: Chatbot em Streamlit] |
-| LLM | [ex: GPT-4 via API] |
+| LLM | [Ollama(local)] |
 | Base de Conhecimento | [ex: JSON/CSV com dados do cliente] |
 | Validação | [ex: Checagem de alucinações] |
 
@@ -78,8 +79,13 @@ flowchart TD
 - [ ] [ex: Respostas incluem fonte da informação]
 - [ ] [ex: Quando não sabe, admite e redireciona]
 - [ ] [ex: Não faz recomendações de investimento sem perfil do cliente]
+- [ ] [ex: Foca apenas em educar]
+- [ ] [ex: Informações baseadas em perfil do cliente, com intuito de melhorar seu entendimento sobre o tema]
 
 ### Limitações Declaradas
 > O que o agente NÃO faz?
 
-[Liste aqui as limitações explícitas do agente]
+- [ ] [Liste aqui as limitações explícitas do agente]
+- [ ] [Não acessa dados bancarios reais]
+- [ ] [Não faz transações]
+- [ ] [não compartilha dados de maneira autonoma]
