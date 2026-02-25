@@ -4,12 +4,12 @@
 
 Descreva se usou os arquivos da pasta `data`, por exemplo:
 
-| Arquivo | Formato | Utilização no Agente |
+| Arquivo | Formato | Para que serve no EDU |
 |---------|---------|---------------------|
-| `historico_atendimento.csv` | CSV | Contextualizar interações anteriores |
-| `perfil_investidor.json` | JSON | Personalizar recomendações |
-| `produtos_financeiros.json` | JSON | Sugerir produtos adequados ao perfil |
-| `transacoes.csv` | CSV | Analisar padrão de gastos do cliente |
+| `historico_atendimento.csv` | CSV | Contextualizar interações anteriores, ou seja dar continuidade ao aprendizado de forma mais eficiente |
+| `perfil_investidor.json` | JSON | Personalizar as explicações  sobre as duvidas e nessecidades de aprendizado |
+| `produtos_financeiros.json` | JSON | Conhecer os produtos adequados ao perfil, para que possam ser detalhados ao cliente |
+| `transacoes.csv` | CSV | Analisar e explicar de forma didatica as transações |
 
 > [!TIP]
 > **Quer um dataset mais robusto?** Você pode utilizar datasets públicos do [Hugging Face](https://huggingface.co/datasets) relacionados a finanças, desde que sejam adequados ao contexto do desafio.
