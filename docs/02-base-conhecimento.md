@@ -30,19 +30,14 @@ Foram feitas alterações, indicando fundos imobiliarios
 > Descreva como seu agente acessa a base de conhecimento
 
 '''
-import pandas as pd
+
 import json
+import pandas as pd
 
-*CSVs
-historico = pd.read_csv('data/historico_atendimento.csv')
-transacoes = pd.read_csv('data/transacoes.csv')
-
-*JSONs
-with open('data/produtos_investidor.json', 'r', encoding='utf-8')as f:
-    perfil=json.load(f)
-
-with open('data/produtos_financeiros.json', 'r', encoding='utf-8')as f:
-    produtos=json.load(f)
+perfil = json.load(open('./data/perfil_investidor.json'))
+transacoes = pd.read_csv('./data/transacoes.csv')
+historico = pd.read_csv('./data/historico_atendimento.csv')
+produtos = json.load(open('./data/produtos_financeiros.json'))
 '''
 
 ### Como os dados são usados no prompt?
