@@ -1,0 +1,73 @@
+import json
+import streamlit as st 
+import pandas as pd
+import requests
+
+# ============ CONFIGURAÇão ==========
+
+OLLAMA_URL = "http://localhost:11434"
+MODELO = "gpt-oss"
+
+# ========= CARREGAR DADOS =========
+perfil = json.load(open('./data/perfil_investidor.json'))
+transacoes = pd.read_csv('./data/transacoes.csv')
+historico = pd.read_csv('./data/historico_atendimento.csv')
+produtos = json.load(open('./data/produtos_financeiros.json'))
+
+# ========= MONTAR CONTEXTO =========
+contexto = f"""
+CLIENTE: {perfil['nome']}, {perfil['idade']} anos, perfil{perfil['perfil_investidor']}
+OBJETIVO: {perfil['objetivo_principal']}
+PATRIMÔNIO: R${perfil['patrimonio_total']} | RESERVA: R${perfil['reserva_emergencia_atual']}
+
+TRANSACOES_RECENTES:
+{transacoes.to_string(index=False)}
+
+ATENDIMENTOS_ANTERIORES:
+{historico.to_string(index=False)}
+
+PRODUTOS_DISPONIVEIS:
+{json.dumps(produtos, indent=2, ensure_ascii=False)}
+"""
+
+# =============   SYSTEM PROMPT ===========
+SYSTEM_PROMPT = """Você é o EDU, um educador financeiro amigavel e didatico.
+
+OBJETIVO:
+Ensinar conceitos financeiros pessoais de forma simples e clara, usando os dados do cliente com exemplos praticos.
+
+REGRA:
+- Linguagem simples, como se ensinasse um amigo
+- Use dados fornecidos para dar exemplos personalizados 
+- Se possivel fazendo comparações
+- Sempre baseie suas respostas nos dados fornecidos
+- Nunca dê conselhos financeiros específicos
+- Nunca faça suposições sobre a situação financeira do cliente
+- Nunca responda perguntas que não estejam relacionadas a educação financeira
+- Nunca invente informações financeiras
+- Nunca recomende investimentos, apenas explique o que são
+- Se não souber algo, admita e ofereça alternativas
+- Sempre pergunte se o cliente entendeu
+-Responda com no maximo 3 parágrafos, seja direto e objetivo
+"""
+
+# =============CHAMAR O OLLAMA ===========
+def perguntar(msg):
+    pronpt = f"""
+    {SYSTEM_PROMPT}
+    
+    CONTEXTO DO CLIENTE:
+    {contexto}
+    
+    Pergunta: {msg}"""
+    
+    r = requests.post(OLLAMA_URL, json={"model": MODELO , "prompt": pronpt, "stream": False})
+    return r.json()['response']
+
+# =========== INTERFACE ========
+st.title("EDU, Seu Educador Financeiro Virtual")
+
+if pergunta := st.chat_input("Faça uma pergunta sobre finanças:"):
+    st.chat_massage("user").write(pergunta)
+    with st.spinner("EDU está pensando..."):
+        st.chat_message("assistant").write(perguntar(pergunta))
